@@ -1,7 +1,14 @@
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
+import { useAuth } from "../../context/AuthContext";
 import CustomTabBar from "../../components/ui/CustomTabBar";
 
 export default function TabsLayout() {
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Redirect href="/auth" />
+  }
+  
   return (
     <Tabs
       screenOptions={{
