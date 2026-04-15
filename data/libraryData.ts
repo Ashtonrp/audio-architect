@@ -15,6 +15,27 @@ export const savedPlaylists = [
   },
 ];
 
+export const savedAlbums = [
+  {
+    id: "1",
+    title: "Blonde",
+    subtitle: "Frank Ocean",
+    image: "https://picsum.photos/200/200?36",
+  },
+  {
+    id: "2",
+    title: "Currents",
+    subtitle: "Tame Impala",
+    image: "https://picsum.photos/200/200?37",
+  },
+  {
+    id: "3",
+    title: "Dummy",
+    subtitle: "Portishead",
+    image: "https://picsum.photos/200/200?38",
+  },
+];
+
 export const savedSongs = [
   {
     id: "1",

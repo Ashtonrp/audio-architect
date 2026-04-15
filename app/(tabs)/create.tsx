@@ -1,17 +1,39 @@
 import { useState } from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 import Screen from "../../components/ui/Screen";
 import CreateHeader from "../../components/create/CreateHeader";
 import PlaylistCoverPicker from "../../components/create/PlaylistCoverPicker";
 import TextField from "../../components/create/TextField";
 import PrimaryButton from "../../components/create/PrimaryButton";
+import { useLibrary } from "../../context/LibraryContext";
 
 export default function CreateScreen() {
+  const router = useRouter();
+  const { addPlaylist } = useLibrary();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const handleCreatePlaylist = () => {
-    Alert.alert("Playlist Created", `Created "${title || "Untitled Playlist"}"`);
+    const trimmedTitle = title.trim();
+
+    if (!trimmedTitle) {
+      Alert.alert("Missing name", "Please enter a playlist name.");
+      return;
+    }
+
+    addPlaylist(trimmedTitle);
+
+    Alert.alert("Playlist Created", `Created "${trimmedTitle}"`, [
+      {
+        text: "OK",
+        onPress: () => router.push("/(tabs)/library"),
+      },
+    ]);
+
+    setTitle("");
+    setDescription("");
   };
 
   return (
@@ -19,7 +41,11 @@ export default function CreateScreen() {
       <ScrollView contentContainerStyle={styles.content}>
         <CreateHeader />
 
-        <PlaylistCoverPicker onPress={() => Alert.alert("Cover Picker", "Image picker can be added later.")} />
+        <PlaylistCoverPicker
+          onPress={() =>
+            Alert.alert("Cover Picker", "Image picker can be added later.")
+          }
+        />
 
         <TextField
           label="Playlist Name"

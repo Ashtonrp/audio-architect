@@ -6,18 +6,19 @@ import LibraryHeader from "../../components/library/LibraryHeader";
 import FilterPill from "../../components/library/FilterPill";
 import LibraryPlaylistCard from "../../components/library/LibraryPlaylistCard";
 import LibrarySongRow from "../../components/library/LibrarySongRow";
-import {
-  libraryFilters,
-  savedPlaylists,
-  savedSongs,
-} from "../../data/libraryData";
+import { libraryFilters, savedSongs } from "../../data/libraryData";
+import { useLibrary } from "../../context/LibraryContext";
 
 export default function LibraryScreen() {
   const [activeFilter, setActiveFilter] = useState("Playlists");
+  const { playlists } = useLibrary();
 
   return (
     <Screen>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.content}
+      >
         <LibraryHeader />
 
         <View style={styles.filters}>
@@ -31,29 +32,33 @@ export default function LibraryScreen() {
           ))}
         </View>
 
-        <SectionHeader title="Saved Playlists" />
-        <View style={styles.section}>
-          {savedPlaylists.map((playlist) => (
-            <LibraryPlaylistCard
-              key={playlist.id}
-              title={playlist.title}
-              subtitle={playlist.subtitle}
-              image={playlist.image}
-            />
-          ))}
-        </View>
+        {activeFilter === "Playlists" && (
+          <View style={styles.section}>
+            <SectionHeader title="Saved Playlists" />
+            {playlists.map((playlist) => (
+              <LibraryPlaylistCard
+                key={playlist.id}
+                title={playlist.title}
+                subtitle={playlist.subtitle}
+                image={playlist.image}
+              />
+            ))}
+          </View>
+        )}
 
-        <SectionHeader title="Liked Songs" />
-        <View>
-          {savedSongs.map((song) => (
-            <LibrarySongRow
-              key={song.id}
-              title={song.title}
-              artist={song.artist}
-              image={song.image}
-            />
-          ))}
-        </View>
+        {activeFilter === "Songs" && (
+          <View style={styles.section}>
+            <SectionHeader title="Saved Songs" />
+            {savedSongs.map((song) => (
+              <LibrarySongRow
+                key={song.id}
+                title={song.title}
+                artist={song.artist}
+                image={song.image}
+              />
+            ))}
+          </View>
+        )}
       </ScrollView>
     </Screen>
   );

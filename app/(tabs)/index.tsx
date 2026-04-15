@@ -5,13 +5,16 @@ import SectionHeader from "../../components/ui/SectionHeader";
 import AlbumCard from "../../components/home/AlbumCard";
 import PlaylistRow from "../../components/home/PlaylistRow";
 import SongCard from "../../components/home/SongCard";
+import { useRouter } from "expo-router";
 import {
   recentAlbums,
   recentPlaylists,
   recentlyLiked,
-} from "../../data/HomeData"
+} from "../../data/HomeData";
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <Screen>
       <ScrollView contentContainerStyle={styles.content}>
@@ -25,7 +28,16 @@ export default function HomeScreen() {
 
         <View style={styles.divider} />
 
-        <SectionHeader title="Recent Albums" actionLabel="Albums" />
+        <SectionHeader
+          title="Recent Albums"
+          actionLabel="View Albums"
+          onActionPress={() =>
+            router.push({
+              pathname: "/(tabs)/library",
+              params: { filter: "Albums" },
+            })
+          }
+        />
         <View style={styles.row}>
           {recentAlbums.map((album) => (
             <AlbumCard
@@ -37,14 +49,32 @@ export default function HomeScreen() {
           ))}
         </View>
 
-        <SectionHeader title="Recent Playlists" actionLabel="Playlists" />
+        <SectionHeader
+          title="Recent Playlists"
+          actionLabel="View Playlists"
+          onActionPress={() =>
+            router.push({
+              pathname: "/(tabs)/library",
+              params: { filter: "Playlists" },
+            })
+          }
+        />
         <View style={styles.playlists}>
           {recentPlaylists.map((playlist) => (
             <PlaylistRow key={playlist.id} title={playlist.title} />
           ))}
         </View>
 
-        <SectionHeader title="Recently Liked" actionLabel="Songs" />
+        <SectionHeader
+          title="Recently Liked"
+          actionLabel="View Songs"
+          onActionPress={() =>
+            router.push({
+              pathname: "/(tabs)/library",
+              params: { filter: "Songs" },
+            })
+          }
+        />
         <View style={styles.row}>
           {recentlyLiked.map((song) => (
             <SongCard
