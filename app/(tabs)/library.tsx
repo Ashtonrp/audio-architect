@@ -11,14 +11,31 @@ import { useLibrary } from "../../context/LibraryContext";
 
 export default function LibraryScreen() {
   const [activeFilter, setActiveFilter] = useState("Playlists");
+  const [likedSongIds, setLikedSongIds] = useState<Set<string>>(
+    new Set(savedSongs.map((song) => song.id))
+  );
+
   const { playlists } = useLibrary();
+
+  const toggleLikedSongs = (songId: string) => {
+    setLikedSongIds((prev) => {
+      const next = new Set(prev);
+
+      if (next.has(songId)) {
+        next.delete(songId);
+      } else {
+        next.add(songId);
+      }
+
+      return next;
+    });
+  }
 
   return (
     <Screen>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.content}
-      >
+        contentContainerStyle={styles.content}>
         <LibraryHeader />
 
         <View style={styles.filters}>
@@ -55,6 +72,8 @@ export default function LibraryScreen() {
                 title={song.title}
                 artist={song.artist}
                 image={song.image}
+                isLiked={likedSongIds.has(song.id)}
+                onToggleHeart={() => toggleLikedSongs(song.id)}
               />
             ))}
           </View>

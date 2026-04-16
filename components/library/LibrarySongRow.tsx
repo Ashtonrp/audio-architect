@@ -1,13 +1,15 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
   title: string;
   artist: string;
   image: string;
+  isLiked: boolean;
+  onToggleHeart: () => void;
 };
 
-export default function LibrarySongRow({ title, artist, image }: Props) {
+export default function LibrarySongRow({ title, artist, image, isLiked, onToggleHeart }: Props) {
   return (
     <View style={styles.row}>
       <Image source={{ uri: image }} style={styles.image} />
@@ -21,7 +23,11 @@ export default function LibrarySongRow({ title, artist, image }: Props) {
         </Text>
       </View>
 
-      <Ionicons name="heart" size={18} color="#FF4FD8" />
+      <TouchableOpacity onPress={onToggleHeart} hitSlop={10}>
+        <Ionicons name={isLiked ? "heart" : "heart-outline"} 
+        size={18} 
+        color="#FF4FD8" />
+      </TouchableOpacity>
     </View>
   );
 }

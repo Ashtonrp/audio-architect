@@ -1,38 +1,22 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { View, Text, StyleSheet } from "react-native";
 
 export default function PlayerHeader() {
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.8}>
-        <Ionicons name="chevron-down" size={28} color="#FFFFFF" />
-      </TouchableOpacity>
-
-      <View style={styles.center}>
-        <Text style={styles.label}>Now Playing</Text>
-      </View>
-
-      <TouchableOpacity activeOpacity={0.8}>
-        <Ionicons name="ellipsis-horizontal" size={24} color="#FFFFFF" />
-      </TouchableOpacity>
+      <Text style={styles.label}>Now Playing</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 40,
-    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 28,
-  },
-  center: {
-    alignItems: "center",
+    marginBottom: 24,
   },
   label: {
-    color: "#FFFFFF",
-    fontSize: 16,
+    color: "#A1A1B3",
+    fontSize: 12,
     fontWeight: "600",
+    letterSpacing: 1,
   },
 });

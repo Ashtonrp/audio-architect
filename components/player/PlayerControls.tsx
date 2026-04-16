@@ -4,16 +4,24 @@ import { Ionicons } from "@expo/vector-icons";
 export default function PlayerControls() {
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.8}>
-        <Ionicons name="play-skip-back" size={34} color="#FFFFFF" />
+      <TouchableOpacity style={styles.sideButton}>
+        <Ionicons name="shuffle" size={22} color="#A1A1B3" />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.playButton} activeOpacity={0.8}>
-        <Ionicons name="pause" size={34} color="#05050A" />
+      <TouchableOpacity style={styles.navButton}>
+        <Ionicons name="play-skip-back" size={28} color="#FFFFFF" />
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.8}>
-        <Ionicons name="play-skip-forward" size={34} color="#FFFFFF" />
+      <TouchableOpacity style={styles.playButton}>
+        <Ionicons name="pause" size={30} color="#0E0E12" />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.navButton}>
+        <Ionicons name="play-skip-forward" size={28} color="#FFFFFF" />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.sideButton}>
+        <Ionicons name="repeat" size={22} color="#A1A1B3" />
       </TouchableOpacity>
     </View>
   );
@@ -21,15 +29,25 @@ export default function PlayerControls() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 8,
     flexDirection: "row",
-    justifyContent: "space-evenly",
     alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  sideButton: {
+    width: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  navButton: {
+    width: 48,
+    alignItems: "center",
+    justifyContent: "center",
   },
   playButton: {
-    width: 74,
-    height: 74,
-    borderRadius: 37,
+    width: 72,
+    height: 72,
+    borderRadius: 36,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",

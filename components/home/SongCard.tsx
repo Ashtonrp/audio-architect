@@ -1,23 +1,18 @@
-import { Image, Text, View, StyleSheet } from "react-native";
+import { Image, Text, View, StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
   title: string;
   artist: string;
   image: string;
+  onPress?: () => void;
 };
 
-export default function SongCard({ title, artist, image }: Props) {
+export default function SongCard({ title, artist, image, onPress }: Props) {
   return (
-    <View style={styles.card}>
+    <Pressable onPress={onPress} style={styles.card}>
       <View style={styles.imageWrap}>
         <Image source={{ uri: image }} style={styles.image} />
-        <Ionicons
-          name="heart-outline"
-          size={16}
-          color="#FFFFFF"
-          style={styles.heart}
-        />
       </View>
       <Text style={styles.title} numberOfLines={1}>
         {title}
@@ -25,7 +20,7 @@ export default function SongCard({ title, artist, image }: Props) {
       <Text style={styles.artist} numberOfLines={1}>
         {artist}
       </Text>
-    </View>
+    </Pressable>
   );
 }
 

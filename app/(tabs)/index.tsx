@@ -21,7 +21,7 @@ export default function HomeScreen() {
         <Header />
 
         <Text style={styles.subtitle}>
-          Welcome to AudioArchitect @user,{"\n"}
+          Welcome to AudioArchitect,{"\n"}
           Lets take a look at your recent{"\n"}
           activity
         </Text>
@@ -82,6 +82,16 @@ export default function HomeScreen() {
               title={song.title}
               artist={song.artist}
               image={song.image}
+              onPress={() => 
+                router.push({
+                  pathname: "/(tabs)/player",
+                  params: {
+                    title: song.title,
+                    artist: song.artist,
+                    image: song.image,
+                  },
+                })
+              }
             />
           ))}
         </View>
