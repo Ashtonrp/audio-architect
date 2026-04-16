@@ -66,6 +66,11 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const playNextSong = () => {
     if (!currentSong || musicSongs.length === 0) return;
 
+    if(repeatOn) {
+        setCurrentSong(currentSong)
+        return;
+    }
+
     if (shuffleOn) {
         if(musicSongs.length === 1) {
             setCurrentSong(musicSongs[0]);
