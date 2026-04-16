@@ -6,14 +6,11 @@ import AlbumCard from "../../components/home/AlbumCard";
 import PlaylistRow from "../../components/home/PlaylistRow";
 import SongCard from "../../components/home/SongCard";
 import { useRouter } from "expo-router";
-import {
-  recentAlbums,
-  recentPlaylists,
-  recentlyLiked,
-} from "../../data/HomeData";
+import { useMusic } from "../../context/MusicContext";
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { albums, playlists, likedSongs, setCurrentSong } = useMusic();
 
   return (
     <Screen>
@@ -39,7 +36,7 @@ export default function HomeScreen() {
           }
         />
         <View style={styles.row}>
-          {recentAlbums.map((album) => (
+          {albums.slice(0,3).map((album) => (
             <AlbumCard
               key={album.id}
               title={album.title}
@@ -60,7 +57,7 @@ export default function HomeScreen() {
           }
         />
         <View style={styles.playlists}>
-          {recentPlaylists.map((playlist) => (
+          {playlists.slice(0,2).map((playlist) => (
             <PlaylistRow key={playlist.id} title={playlist.title} />
           ))}
         </View>
@@ -76,22 +73,16 @@ export default function HomeScreen() {
           }
         />
         <View style={styles.row}>
-          {recentlyLiked.map((song) => (
+          {likedSongs.slice(0,3).map((song) => (
             <SongCard
               key={song.id}
               title={song.title}
               artist={song.artist}
               image={song.image}
-              onPress={() => 
-                router.push({
-                  pathname: "/(tabs)/player",
-                  params: {
-                    title: song.title,
-                    artist: song.artist,
-                    image: song.image,
-                  },
-                })
-              }
+              onPress={() => {
+                setCurrentSong(song);
+                router.push("/(tabs)/player");
+              }}
             />
           ))}
         </View>

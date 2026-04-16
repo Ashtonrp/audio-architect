@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
@@ -7,11 +7,19 @@ type Props = {
   image: string;
   isLiked: boolean;
   onToggleHeart: () => void;
+  onPress?: () => void;
 };
 
-export default function LibrarySongRow({ title, artist, image, isLiked, onToggleHeart }: Props) {
+export default function LibrarySongRow({
+  title,
+  artist,
+  image,
+  isLiked,
+  onToggleHeart,
+  onPress,
+}: Props) {
   return (
-    <View style={styles.row}>
+    <Pressable onPress={onPress} style={styles.row}>
       <Image source={{ uri: image }} style={styles.image} />
 
       <View style={styles.textWrap}>
@@ -23,12 +31,14 @@ export default function LibrarySongRow({ title, artist, image, isLiked, onToggle
         </Text>
       </View>
 
-      <TouchableOpacity onPress={onToggleHeart} hitSlop={10}>
-        <Ionicons name={isLiked ? "heart" : "heart-outline"} 
-        size={18} 
-        color="#FF4FD8" />
+      <TouchableOpacity onPress={onToggleHeart} hitSlop={10} style={styles.heartButton}>
+        <Ionicons
+          name={isLiked ? "heart" : "heart-outline"}
+          size={18}
+          color="#FF4FD8"
+        />
       </TouchableOpacity>
-    </View>
+    </Pressable>
   );
 }
 
@@ -58,5 +68,9 @@ const styles = StyleSheet.create({
   artist: {
     color: "#A1A1B3",
     fontSize: 13,
+  },
+  heartButton: {
+    paddingLeft: 12,
+    paddingVertical: 8,
   },
 });

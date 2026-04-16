@@ -1,14 +1,24 @@
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useMusic } from "../../context/MusicContext";
 
 export default function PlayerControls() {
+  const {
+    shuffleOn,
+    repeatOn,
+    playNextSong,
+    playPreviousSong,
+    toggleShuffle,
+    toggleRepeat,
+  } = useMusic();
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.sideButton}>
-        <Ionicons name="shuffle" size={22} color="#A1A1B3" />
+      <TouchableOpacity style={styles.sideButton} onPress={toggleShuffle}>
+        <Ionicons name="shuffle" size={22} color={shuffleOn ? "#FF4FD8" : "#A1A1B3"}/>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.navButton}>
+      <TouchableOpacity style={styles.navButton} onPress={playPreviousSong}>
         <Ionicons name="play-skip-back" size={28} color="#FFFFFF" />
       </TouchableOpacity>
 
@@ -16,12 +26,12 @@ export default function PlayerControls() {
         <Ionicons name="pause" size={30} color="#0E0E12" />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.navButton}>
+      <TouchableOpacity style={styles.navButton} onPress={playNextSong}>
         <Ionicons name="play-skip-forward" size={28} color="#FFFFFF" />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.sideButton}>
-        <Ionicons name="repeat" size={22} color="#A1A1B3" />
+      <TouchableOpacity style={styles.sideButton} onPress={toggleRepeat}>
+        <Ionicons name="repeat" size={22} color={repeatOn ? "#FF4FD8" : "#A1A1B3"} />
       </TouchableOpacity>
     </View>
   );

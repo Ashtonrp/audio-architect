@@ -5,39 +5,49 @@ import AlbumArtwork from "../../components/player/AlbumArtwork";
 import TrackInfo from "../../components/player/TrackInfo";
 import ProgressBar from "../../components/player/ProgressBar";
 import PlayerControls from "../../components/player/PlayerControls";
-import { currentTrack } from "../../data/playerData";
+import { useMusic } from "../../context/MusicContext";
 
 export default function PlayerScreen() {
-    return(
-        <Screen>
-            <View style={styles.container}>
-                <PlayerHeader />
+  const { currentSong } = useMusic();
 
-                <AlbumArtwork image={currentTrack.albumArt} />
-
-                <TrackInfo
-                    title={currentTrack.title}
-                    artist={currentTrack.artist}
-                />
-
-                <ProgressBar
-                    currentTime={currentTrack.currentTime}
-                    duration={currentTrack.duration}
-                    progress={currentTrack.progress}
-                />
-
-                <PlayerControls />
-            </View>
-        </Screen>
+  if (!currentSong) {
+    return (
+      <Screen>
+        <View style={styles.container} />
+      </Screen>
     );
+  }
+
+  return (
+    <Screen>
+      <View style={styles.container}>
+        <PlayerHeader />
+
+        <AlbumArtwork image={currentSong.image} />
+
+        <TrackInfo
+          title={currentSong.title}
+          artist={currentSong.artist}
+        />
+
+        <ProgressBar
+          currentTime="1:42"
+          duration="3:58"
+          progress={0.43}
+        />
+
+        <PlayerControls />
+      </View>
+    </Screen>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 24,
-        paddingTop: 20,
-        paddingBottom: 120,
-        justifyContent: "flex-start",
-    },
+  container: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 20,
+    paddingBottom: 120,
+    justifyContent: "flex-start",
+  },
 });
