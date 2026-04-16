@@ -12,12 +12,14 @@ import { useMusic } from "../../context/MusicContext";
 
 export default function SearchScreen() {
   const router = useRouter();
+  // Access to the music context for music data
   const { songs, albums, isSongLiked, toggleLikedSong, setCurrentSong } =
     useMusic();
 
   const [query, setQuery] = useState("");
   const trimmedQuery = query.trim().toLowerCase();
 
+  // Filters based on the search 
   const filteredSongs = useMemo(() => {
     if (!trimmedQuery) return [];
 
@@ -38,6 +40,7 @@ export default function SearchScreen() {
     );
   }, [trimmedQuery, albums]);
 
+  // Shows default view if no search
   const showSearchResults = trimmedQuery.length > 0;
 
   return (
@@ -46,6 +49,7 @@ export default function SearchScreen() {
         <SearchHeader />
         <SearchBar value={query} onChangeText={setQuery} />
 
+        {/* shows default browse seciton if no search results*/}
         {!showSearchResults ? (
           <>
             <SectionHeader title="Browse All" />

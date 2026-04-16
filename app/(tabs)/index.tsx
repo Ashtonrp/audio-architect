@@ -10,6 +10,7 @@ import { useMusic } from "../../context/MusicContext";
 
 export default function HomeScreen() {
   const router = useRouter();
+  // Gets music data from music context
   const { albums, playlists, likedSongs, setCurrentSong } = useMusic();
 
   return (
@@ -28,6 +29,7 @@ export default function HomeScreen() {
         <SectionHeader
           title="Recent Albums"
           actionLabel="View Albums"
+          // goes to library to show albums
           onActionPress={() =>
             router.push({
               pathname: "/(tabs)/library",
@@ -36,6 +38,7 @@ export default function HomeScreen() {
           }
         />
         <View style={styles.row}>
+          {/* shows set amount of albums - three in this case */}
           {albums.slice(0,3).map((album) => (
             <AlbumCard
               key={album.id}
@@ -49,6 +52,7 @@ export default function HomeScreen() {
         <SectionHeader
           title="Recent Playlists"
           actionLabel="View Playlists"
+          // goes to library to show playlists
           onActionPress={() =>
             router.push({
               pathname: "/(tabs)/library",
@@ -57,6 +61,7 @@ export default function HomeScreen() {
           }
         />
         <View style={styles.playlists}>
+          {/* shows set amount of playlists */}
           {playlists.slice(0,2).map((playlist) => (
             <PlaylistRow key={playlist.id} title={playlist.title} />
           ))}
@@ -73,12 +78,14 @@ export default function HomeScreen() {
           }
         />
         <View style={styles.row}>
+          {/* shows set amount of songs */}
           {likedSongs.slice(0,3).map((song) => (
             <SongCard
               key={song.id}
               title={song.title}
               artist={song.artist}
               image={song.image}
+              // goes to library to show songs
               onPress={() => {
                 setCurrentSong(song);
                 router.push("/(tabs)/player");

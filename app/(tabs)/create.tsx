@@ -10,11 +10,14 @@ import { useLibrary } from "../../context/LibraryContext";
 
 export default function CreateScreen() {
   const router = useRouter();
+  // access the function to add a new playlist from library context
   const { addPlaylist } = useLibrary();
 
+  // form state for when making the playlist
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  // handles creation logic
   const handleCreatePlaylist = () => {
     const trimmedTitle = title.trim();
 
@@ -23,6 +26,7 @@ export default function CreateScreen() {
       return;
     }
 
+    // adds playlist to global library state
     addPlaylist(trimmedTitle);
 
     Alert.alert("Playlist Created", `Created "${trimmedTitle}"`, [
@@ -32,6 +36,7 @@ export default function CreateScreen() {
       },
     ]);
 
+    // resets inputs after playlist is created
     setTitle("");
     setDescription("");
   };

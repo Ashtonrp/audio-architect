@@ -32,6 +32,7 @@ type MusicContextType = {
   toggleRepeat: () => void;
 };
 
+// Makes the context object as undefined 
 const MusicContext = createContext<MusicContextType | undefined>(undefined);
 
 export function MusicProvider({ children }: { children: ReactNode }) {
@@ -43,6 +44,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const [shuffleOn, setShuffleOn] = useState(false);
   const [repeatOn, setRepeatOn] = useState(false);
 
+  // Adds and removes songs from liked set
   const toggleLikedSong = (songId: string) => {
     setLikedSongIds((prev) => {
       const next = new Set(prev);
@@ -63,14 +65,17 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     return musicSongs.filter((song) => likedSongIds.has(song.id));
   }, [likedSongIds]);
 
+  // Moves to the next song on the player
   const playNextSong = () => {
     if (!currentSong || musicSongs.length === 0) return;
 
+    //Keeps same song selected if repeat is on
     if(repeatOn) {
         setCurrentSong(currentSong)
         return;
     }
 
+    // Picks random song if shuffle active
     if (shuffleOn) {
         if(musicSongs.length === 1) {
             setCurrentSong(musicSongs[0]);
@@ -88,6 +93,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
         return;
     }
 
+    // Finds songs position in song list
     const currentIndex = musicSongs.findIndex((song) => song.id === currentSong.id)
 
     if (currentIndex === -1) return;
@@ -132,10 +138,12 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     setCurrentSong(musicSongs[currentIndex - 1]);
   };
 
+  // Turns on or off shuffle
   const toggleShuffle = () => {
     setShuffleOn((prev) => !prev);
   };
 
+  // Turns on or off repeat
   const toggleRepeat = () => {
     setRepeatOn((prev) => !prev);
   };
@@ -165,6 +173,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// Throws error if used outisde of MusicProvider
 export function useMusic() {
   const context = useContext(MusicContext);
 

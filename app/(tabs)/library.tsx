@@ -12,10 +12,12 @@ import { useLibrary } from "../../context/LibraryContext";
 import { useMusic } from "../../context/MusicContext";
 
 export default function LibraryScreen() {
+  // Controls active filter tab
   const [activeFilter, setActiveFilter] = useState("Playlists");
   const router = useRouter();
 
   const { playlists } = useLibrary();
+  // Gets music data from the music context
   const { albums, likedSongs, toggleLikedSong, setCurrentSong } = useMusic();
 
   return (

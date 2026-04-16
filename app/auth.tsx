@@ -10,11 +10,13 @@ import AuthInput from "../components/auth/AuthInput";
 import AuthButton from "../components/auth/AuthButton";
 import AuthSwitch from "../components/auth/AuthSwitch";
 
+// Validation schema - login
 const loginSchema = z.object({
   email: z.email("Enter a valid email address."),
   password: z.string().min(6, "Password must be at least 6 characters."),
 });
 
+// Validation schemca - registration
 const registerSchema = z
   .object({
     name: z.string().min(2, "Name must be at least 2 characters."),
@@ -35,12 +37,14 @@ type FieldErrors = {
 };
 
 export default function AuthScreen() {
+  // Controls screen as login or register
   const [isLogin, setIsLogin] = useState(true);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  // Auth context gives login logout status
   const { isAuthenticated, login, logout } = useAuth();
   const router = useRouter();
 
@@ -55,6 +59,7 @@ export default function AuthScreen() {
 
     const errors: FieldErrors = {};
 
+    // Maps the errors to the specific data
     for (const issue of result.error.issues) {
       const field = issue.path[0] as keyof FieldErrors | undefined;
       if (field && !errors[field]) {
@@ -65,6 +70,7 @@ export default function AuthScreen() {
     return { isValid: false, errors };
   }, [isLogin, name, email, password, confirmPassword]);
 
+  // Clear form inputs
   const clearForm = () => {
     setName("");
     setEmail("");
@@ -72,11 +78,13 @@ export default function AuthScreen() {
     setConfirmPassword("");
   };
 
+  // Switches between login and register mode
   const handleToggleMode = () => {
     setIsLogin((prev) => !prev);
     clearForm();
   };
 
+  // Handles login and registartion submission
   const handleSubmit = () => {
     const result = isLogin
         ? loginSchema.safeParse({ email, password })
@@ -87,7 +95,8 @@ export default function AuthScreen() {
         return;
     }
 
-    login();              
+    login();     
+    // Takes to main app index after login         
     router.replace("/");  
   };
 
